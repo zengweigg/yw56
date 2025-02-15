@@ -5,6 +5,7 @@ go 1.23.5
 require (
 	github.com/go-resty/resty/v2 v2.16.5
 	github.com/json-iterator/go v1.1.12
+	gopkg.in/guregu/null.v4 v4.0.0
 )
 
 require (
