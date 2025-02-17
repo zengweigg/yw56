@@ -26,3 +26,22 @@ func (s xiaoBaoService) QueryCountryList(postData model.YWBlank) (model.YWCountr
 	}
 	return respData, nil
 }
+
+// 创建运单
+func (s xiaoBaoService) CreateExpressOrder(postData model.YWOrderPost) (model.YWOrderResp, error) {
+	respData := model.YWOrderResp{}
+	// 请求数据
+	resp, err := s.httpClient.R().
+		SetBody(postData).
+		Post("express.order.create")
+	fmt.Println(string(resp.Body()))
+	if err != nil {
+		return respData, err
+	}
+	// 解析数据
+	err = jsoniter.Unmarshal(resp.Body(), &respData)
+	if err != nil {
+		return respData, nil
+	}
+	return respData, nil
+}
