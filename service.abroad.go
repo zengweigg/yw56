@@ -9,12 +9,12 @@ import (
 type abroadService service
 
 // 尾程业务-取消运单
-func (s abroadService) CreateExpressOrder(postData model.YWOrderPost) (model.YWOrderResp, error) {
-	respData := model.YWOrderResp{}
+func (s abroadService) AbdOrderCancel(postData model.AbdOrderCancelPost) (model.AbdOrderCancelResp, error) {
+	respData := model.AbdOrderCancelResp{}
 	// 请求数据
 	resp, err := s.httpClient.R().
 		SetBody(postData).
-		Post("express.order.create")
+		Post("express.order.cancel")
 	fmt.Println(string(resp.Body()))
 	if err != nil {
 		return respData, err
