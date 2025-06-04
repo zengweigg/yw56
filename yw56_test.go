@@ -12,18 +12,20 @@ func Test001(m *testing.T) {
 	// 初始化
 	cfg := config.LoadConfig()
 	ywClient := NewYWService(*cfg)
-	//构造测试请求数据
-	//postData := model.YWBlank{}
-	//resp, err := ywClient.Services.XiaoBao.QueryCountryList(postData)
-	//if err != nil {
-	//	fmt.Printf("Error: %v\n", err)
-	//	return
-	//}
-	//fmt.Println("666", resp.YWApiResponse, resp.Code, resp.Data, resp.Msg, resp.Success)
+	//  追踪物流
+	apikey := cfg.APIKey
+	res1, _ := ywClient.Services.Track.Tracking(apikey, "UH183870291YP")
+	fmt.Println("响应", res1.Code, res1.Message, res1.Result, res1.RequestTime)
+
+	// 测试
+	res, _ := ywClient.Services.XiaoBao.QueryCountryList()
+	fmt.Println(res)
+
+	// 构造下单请求数据
 	receiverInfo := model.ReceiverInfo{
-		Name:        "glassware",
-		Phone:       "18231730588",
-		Email:       "529932298@qq.com",
+		Name:        "glassware", // 收件人姓名填写不规范，仅支持英文，空格
+		Phone:       "18231730589",
+		Email:       "529932299@qq.com",
 		Company:     "yanwen",
 		Country:     "115",
 		State:       "he bei sheng",
@@ -34,7 +36,7 @@ func Test001(m *testing.T) {
 		TaxNumber:   "qwer123",
 	}
 	senderInfo := model.SenderInfo{
-		Name:        "glassware",
+		Name:        "glasswarb",
 		Phone:       "18231730588",
 		Email:       "529932298@qq.com",
 		Company:     "yanwen",
@@ -82,9 +84,9 @@ func Test001(m *testing.T) {
 	postData := model.YWOrderPost{
 		ChannelID:         "481",
 		OrderSource:       null.StringFrom("portal"),
-		UserID:            "99000015",
-		OrderNumber:       "KI1000000001A",
-		DateOfReceipt:     "2025-02-17",
+		UserID:            "99000014",
+		OrderNumber:       "KI1000000001B",
+		DateOfReceipt:     "2025-05-31",
 		Remark:            "拣货单信息",
 		ReceiverInfo:      receiverInfo,
 		SenderInfo:        senderInfo,
@@ -92,10 +94,12 @@ func Test001(m *testing.T) {
 		PoPStation:        pointID,
 		ImportCustomsInfo: importCustomsInfo,
 	}
-	resp, err := ywClient.Services.XiaoBao.CreateExpressOrder(postData)
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-	fmt.Println("666", resp.Data, resp.Code, resp.Msg, resp.Success)
+	fmt.Println(666, postData)
+	// resp, err := ywClient.Services.XiaoBao.CreateExpressOrder(postData)
+	// if err != nil {
+	// 	fmt.Printf("Error: %v\n", err)
+	// 	return
+	// }
+	// fmt.Println("响应", resp.Code, resp.Msg, resp.Success)
+	// fmt.Println("数据", resp.Data.WaybillNumber, resp.Data.OrderNumber, resp.Data.ReferenceNumber, resp.Data.YanwenOrderNumber)
 }

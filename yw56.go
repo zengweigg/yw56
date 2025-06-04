@@ -1,10 +1,15 @@
 package yw56
 
 import (
-	"encoding/json"
-	"fmt"
+	"github.com/bytedance/sonic"
 	"github.com/go-resty/resty/v2"
 	"github.com/zengweigg/yw56/config"
+)
+
+// 开发文档 https://opendocs.yw56.com.cn/webfile/6993833547773513728/
+
+import (
+	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -27,12 +32,12 @@ func NewYWService(cfg config.Config) *YWClient {
 		config: &cfg,
 		logger: createLogger(),
 	}
-	//OnBeforeRequest：设置请求发送前的钩子函数，允许在请求发送之前对请求进行修改或添加逻辑。
-	//OnAfterResponse：设置响应接收后的钩子函数，允许在接收到响应后处理响应数据或执行其他逻辑。
-	//SetRetryCount：设置请求失败时的最大重试次数。
-	//SetRetryWaitTime：设置每次重试之间的等待时间（最小等待时间）。
-	//SetRetryMaxWaitTime：设置每次重试之间的最大等待时间，实际等待时间会在最小和最大等待时间之间随机选取。
-	//AddRetryCondition：添加自定义的重试条件，当满足该条件时触发重试机制。
+	// OnBeforeRequest：设置请求发送前的钩子函数，允许在请求发送之前对请求进行修改或添加逻辑。
+	// OnAfterResponse：设置响应接收后的钩子函数，允许在接收到响应后处理响应数据或执行其他逻辑。
+	// SetRetryCount：设置请求失败时的最大重试次数。
+	// SetRetryWaitTime：设置每次重试之间的等待时间（最小等待时间）。
+	// SetRetryMaxWaitTime：设置每次重试之间的最大等待时间，实际等待时间会在最小和最大等待时间之间随机选取。
+	// AddRetryCondition：添加自定义的重试条件，当满足该条件时触发重试机制。
 	httpClient := resty.
 		New().
 		SetDebug(YWClient.config.Debug).
@@ -49,14 +54,14 @@ func NewYWService(cfg config.Config) *YWClient {
 	httpClient.
 		SetTimeout(time.Duration(cfg.Timeout) * time.Second).
 		OnBeforeRequest(func(client *resty.Client, request *resty.Request) error {
-			b, e := json.Marshal(request.Body)
+			b, e := sonic.Marshal(request.Body)
 			if e != nil {
 				return e
 			}
 			bStr := string(b)
 			timestamp := strconv.FormatInt(time.Now().UnixMicro(), 10)
 			method := request.URL
-			text := cfg.Apitoken + cfg.APIKey + bStr + "json" + method + timestamp + "V1.0" + cfg.Apitoken
+			text := cfg.ApiToken + cfg.APIKey + bStr + "json" + method + timestamp + "V1.0" + cfg.ApiToken
 			sign := GetSign(text)
 			request.URL = ""
 			request.SetQueryParams(map[string]string{
@@ -93,7 +98,7 @@ func NewYWService(cfg config.Config) *YWClient {
 			}
 			// 解析响应体JSON
 			var responseBody ResponseBody
-			if err := json.Unmarshal(r.Body(), &responseBody); err != nil {
+			if err := sonic.Unmarshal(r.Body(), &responseBody); err != nil {
 				text += fmt.Sprintf(", error: %s", string(r.Body()))
 				YWClient.logger.Debugf("Retry request: %s", text)
 				return true // 如果解析错误则重试
@@ -115,9 +120,7 @@ func NewYWService(cfg config.Config) *YWClient {
 	}
 	YWClient.Services = services{
 		XiaoBao: (xiaoBaoService)(xService), // 小包专线
-		//Gts:  (gtsService)(xService),  // 通用查询
-		//Icms: (icmsService)(xService), // 国际区划
-		//Icsm: (icsmService)(xService), // 关务发票
+		Abroad:  (abroadService)(xService),  // 海外派
 	}
 	return YWClient
 }
