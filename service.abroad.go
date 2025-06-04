@@ -8,7 +8,7 @@ import (
 
 type abroadService service
 
-// 创建运单
+// 尾程业务-取消运单
 func (s abroadService) CreateExpressOrder(postData model.YWOrderPost) (model.YWOrderResp, error) {
 	respData := model.YWOrderResp{}
 	// 请求数据
