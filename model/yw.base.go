@@ -12,11 +12,11 @@ type ParcelInfo struct {
 	HasBattery    int       `json:"hasBattery"`    // 是否含电 1:是 0:否
 	Currency      string    `json:"currency"`      // 申报币种
 	TotalPrice    string    `json:"totalPrice"`    // 申报总价值：汇总多组商品信息品名申报单价*数量之和
-	TotalQuantity string    `json:"totalQuantity"` // 申报总数量
-	TotalWeight   string    `json:"totalWeight"`   // 总重量(单位:g)
-	Height        string    `json:"height"`        // 包裹高度(单位:cm)
-	Width         string    `json:"width"`         // 包裹宽度(单位:cm)
-	Length        string    `json:"length"`        // 包裹长度(单位:cm)
+	TotalQuantity int    `json:"totalQuantity"` // 申报总数量
+	TotalWeight   int    `json:"totalWeight"`   // 总重量(单位:g)
+	Height        int    `json:"height"`        // 包裹高度(单位:cm)
+	Width         int    `json:"width"`         // 包裹宽度(单位:cm)
+	Length        int    `json:"length"`        // 包裹长度(单位:cm)
 	Ioss          string    `json:"ioss"`          // IOSS税号
 }
 
