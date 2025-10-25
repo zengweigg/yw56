@@ -28,7 +28,7 @@ type Product struct {
 	URL         string `json:"url"`         // 商品链接
 	Material    string `json:"material"`    // 商品材质
 	Quantity    string `json:"quantity"`    // 申报数量
-	Weight      int `json:"weight"`      // 单票重量(单位:g)
+	Weight      int    `json:"weight"`      // 单票重量(单位:g)
 	Imei        string `json:"imei"`        // IMEI编码
 }
 
