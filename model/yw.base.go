@@ -24,6 +24,7 @@ type Product struct {
 	GoodsNameCh string `json:"goodsNameCh"` // 中文品名
 	GoodsNameEn string `json:"goodsNameEn"` // 英文品名
 	Price       string `json:"price"`       // 申报单价
+	PriceExport string `json:"priceExport"` // 出口国- 申报单价
 	Hscode      string `json:"hscode"`      // 商品海关编码
 	URL         string `json:"url"`         // 商品链接
 	Material    string `json:"material"`    // 商品材质

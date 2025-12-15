@@ -35,6 +35,7 @@ func (s xiaoBaoService) CreateExpressOrder(postData model.YWOrderPost) (model.YW
 	resp, err := s.httpClient.R().
 		SetBody(postData).
 		Post("express.order.create")
+	fmt.Println(string(resp.Body()))
 	if err != nil {
 		return respData, err
 	}

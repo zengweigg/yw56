@@ -41,6 +41,12 @@ type ImportCustomsInfo struct {
 	TaxPolicyExtends YWCsp `json:"taxPolicyExtends"`
 }
 
+// 海关信息
+type Customs struct {
+	ProductionAndSalesEnterpriseName string `json:"productionAndSalesEnterpriseName"`
+	ProductionAndSalesEnterpriseCode string `json:"productionAndSalesEnterpriseCode"`
+}
+
 // 创建运单
 type YWOrderPost struct {
 	ChannelID         string            `json:"channelId"`
@@ -49,11 +55,13 @@ type YWOrderPost struct {
 	OrderNumber       string            `json:"orderNumber"`
 	DateOfReceipt     string            `json:"dateOfReceipt"`
 	Remark            string            `json:"remark"`
+	SalesPlatform string `json:"salesPlatform"` //销售平台
 	ReceiverInfo      ReceiverInfo      `json:"receiverInfo"`      // 收件人信息
 	ParcelInfo        ParcelInfo        `json:"parcelInfo"`        // 包裹信息
 	SenderInfo        SenderInfo        `json:"senderInfo"`        // 发件人信息
 	PoPStation        YWPointID         `json:"poPStation"`        // 自提网点信息
 	ImportCustomsInfo ImportCustomsInfo `json:"importCustomsInfo"` // 进口清关信息
+	Customs Customs `json:"customs"` // 海关信息
 }
 
 // 响应
