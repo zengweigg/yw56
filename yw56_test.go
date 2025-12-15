@@ -65,11 +65,11 @@ func Test001(m *testing.T) {
 		HasBattery:    1,
 		Currency:      "USD",
 		TotalPrice:    "50.01",
-		TotalQuantity: "10",
-		TotalWeight:   "243",
-		Height:        "10",
-		Width:         "10",
-		Length:        "10",
+		TotalQuantity: 10,
+		TotalWeight:   243,
+		Height:        10,
+		Width:         10,
+		Length:        10,
 		Ioss:          "123456",
 	}
 	csp := model.YWCsp{

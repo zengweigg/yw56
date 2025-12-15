@@ -74,7 +74,7 @@ func NewYWService(cfg config.Config) *YWClient {
 			})
 			return nil
 		}).
-		SetRetryCount(2).
+		SetRetryCount(1).
 		SetRetryWaitTime(5 * time.Second).
 		SetRetryMaxWaitTime(10 * time.Second).
 		AddRetryCondition(func(r *resty.Response, err error) bool {
